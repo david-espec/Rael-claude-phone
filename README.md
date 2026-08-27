@@ -4,6 +4,8 @@
 data center e transmitido para o seu navegador ou celular — com bateria infinita, sempre
 ligado, farmando Roblox por você mesmo enquanto você está offline.
 
+🔗 **Site publicado:** https://david-espec.github.io/Rael-claude-phone/
+
 Este repositório é um monorepo com duas aplicações:
 
 ```
@@ -37,10 +39,12 @@ Plataforma principal, especificada em detalhe no documento de requisitos do prod
 - **Painel administrativo** (`/admin`): visão geral da infraestrutura (dispositivos por
   plataforma, uso de CPU/RAM/Storage da nuvem).
 
-Dados de dispositivos são mantidos em um store em memória no servidor (`lib/store.ts`), com
-rotas de API reais (`app/api/**`) para criar, listar, atualizar e excluir dispositivos. A
-emulação real de Android/iOS (streaming WebRTC, containers, GPU) não roda neste ambiente de
-demonstração — é o próximo passo para produção, descrito no documento de arquitetura.
+O app roda inteiramente no navegador — dispositivos ficam salvos no `localStorage` (via
+`lib/deviceStore.tsx`), sem backend. Isso é o que permite publicar como site 100% estático no
+GitHub Pages (workflow `.github/workflows/pages.yml`, redeploy automático a cada push em
+`main`). A emulação real de Android/iOS (streaming WebRTC, containers, GPU) não roda neste
+ambiente de demonstração — é o próximo passo para produção, descrito no documento de
+arquitetura.
 
 ### Rodando
 

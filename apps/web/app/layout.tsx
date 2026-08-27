@@ -12,14 +12,16 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+
 export const metadata: Metadata = {
   title: "Rael Cloud Phone — Farme Roblox 24/7 na nuvem",
   description:
     "Crie celulares Android e iPhone virtuais que rodam 24/7 na nuvem, com bateria infinita, farmando Roblox sozinhos mesmo com você offline.",
-  manifest: "/manifest.webmanifest",
+  manifest: `${basePath}/manifest.webmanifest`,
   icons: {
-    icon: "/favicon-32.png",
-    apple: "/icons/apple-touch-icon.png",
+    icon: `${basePath}/favicon-32.png`,
+    apple: `${basePath}/icons/apple-touch-icon.png`,
   },
 };
 

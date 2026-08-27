@@ -1,10 +1,10 @@
-import { DeviceGrid } from '@/components/DeviceGrid';
-import { listDevices } from '@/lib/store';
+'use client';
 
-export const dynamic = 'force-dynamic';
+import { DeviceGrid } from '@/components/DeviceGrid';
+import { useDeviceStore } from '@/lib/deviceStore';
 
 export default function DashboardPage() {
-  const devices = listDevices();
+  const { devices } = useDeviceStore();
 
   return (
     <div className="flex flex-col gap-6">

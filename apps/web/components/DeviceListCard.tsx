@@ -13,7 +13,7 @@ export function DeviceListCard({ device }: { device: CloudDevice }) {
 
   return (
     <Link
-      href={`/dashboard/devices/${device.id}`}
+      href={`/dashboard/devices/view?id=${device.id}`}
       className="flex flex-col gap-3 rounded-2xl border border-border bg-surface p-5 transition hover:border-primary/60"
     >
       <div className="flex items-start justify-between gap-3">

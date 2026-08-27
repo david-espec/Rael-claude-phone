@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import { withBasePath } from '@/lib/basePath';
 import { useInstallPrompt } from '@/lib/useInstallPrompt';
 
 type Step = 'confirm' | 'installing' | 'done' | 'declined';
@@ -46,7 +47,13 @@ export function DownloadModal({ open, onClose }: DownloadModalProps) {
         {step === 'confirm' && (
           <>
             <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/15">
-              <Image src="/icons/icon-192.png" alt="Rael Cloud Phone" width={40} height={40} className="rounded-xl" />
+              <Image
+                src={withBasePath('/icons/icon-192.png')}
+                alt="Rael Cloud Phone"
+                width={40}
+                height={40}
+                className="rounded-xl"
+              />
             </div>
             <h2 className="text-center text-lg font-bold">Instalar Rael Cloud Phone</h2>
             <p className="mt-2 text-center text-sm leading-relaxed text-muted">
@@ -75,7 +82,13 @@ export function DownloadModal({ open, onClose }: DownloadModalProps) {
           <div className="flex flex-col items-center py-4">
             <div className="relative h-40 w-24 rounded-[20px] border-4 border-surface-alt bg-black overflow-hidden">
               <div className="flex h-full w-full flex-col items-center justify-center gap-2">
-                <Image src="/icons/icon-192.png" alt="" width={36} height={36} className="rounded-lg opacity-80" />
+                <Image
+                  src={withBasePath('/icons/icon-192.png')}
+                  alt=""
+                  width={36}
+                  height={36}
+                  className="rounded-lg opacity-80"
+                />
                 <div className="h-1.5 w-16 overflow-hidden rounded-full bg-surface-alt">
                   <div className="h-full rounded-full bg-accent animate-progress-fill" />
                 </div>
@@ -92,7 +105,7 @@ export function DownloadModal({ open, onClose }: DownloadModalProps) {
                 <div className="h-6 w-6 rounded-lg bg-surface-alt" />
                 <div className="h-6 w-6 rounded-lg bg-surface-alt" />
                 <div className="h-6 w-6 animate-install-pop overflow-hidden rounded-lg">
-                  <Image src="/icons/icon-192.png" alt="" width={24} height={24} />
+                  <Image src={withBasePath('/icons/icon-192.png')} alt="" width={24} height={24} />
                 </div>
                 <div className="h-6 w-6 rounded-lg bg-surface-alt" />
                 <div className="h-6 w-6 rounded-lg bg-surface-alt" />

@@ -21,7 +21,8 @@ export function useInstallPrompt() {
     setIsStandalone(window.matchMedia('(display-mode: standalone)').matches);
 
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/sw.js').catch(() => undefined);
+      const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
+      navigator.serviceWorker.register(`${basePath}/sw.js`).catch(() => undefined);
     }
 
     return () => window.removeEventListener('beforeinstallprompt', handler);

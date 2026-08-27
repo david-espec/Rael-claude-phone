@@ -1,12 +1,19 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { withBasePath } from '@/lib/basePath';
 
 export function DashboardHeader() {
   return (
     <header className="sticky top-0 z-30 border-b border-border bg-background/95 backdrop-blur">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-6 py-4">
         <Link href="/dashboard" className="flex items-center gap-2">
-          <Image src="/icons/icon-192.png" alt="Rael Cloud Phone" width={30} height={30} className="rounded-lg" />
+          <Image
+            src={withBasePath('/icons/icon-192.png')}
+            alt="Rael Cloud Phone"
+            width={30}
+            height={30}
+            className="rounded-lg"
+          />
           <span className="text-sm font-bold tracking-tight">Rael Cloud Phone</span>
         </Link>
 
