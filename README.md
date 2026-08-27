@@ -1,44 +1,59 @@
 # Rael Cloud Phone
 
-App mobile (React Native + Expo) inspirado no conceito de "cloud phone" (ex: UgPhone): um
-dispositivo Android real rodando em um data center e transmitido para o seu celular, sem
-consumir memória, bateria ou espaço do aparelho local.
+"Tudo virtual, nas nuvens, dentro de um app." Um Android ou iPhone completo, rodando em um
+data center e transmitido para o seu navegador ou celular — com bateria infinita, sempre
+ligado, sem ocupar memória do seu aparelho físico.
 
-## Funcionalidades da UI
-
-- **Dispositivos**: lista dos seus celulares em nuvem, com status (em execução, auto-play
-  24/7, desligado), latência, uso de armazenamento e minutos restantes no ciclo.
-- **Visualizador de dispositivo**: tela de streaming remoto com moldura de celular, controles
-  de ligar/desligar, auto-play 24/7, volume e home.
-- **Planos**: pacotes por hora (paga só pelo uso) e assinaturas mensal/anual, com banner de
-  teste grátis para novos usuários.
-- **Perfil**: resumo da conta, dispositivos, minutos disponíveis e acesso a suporte/feedback.
-
-## Stack
-
-- [Expo](https://expo.dev) + React Native + TypeScript
-- [React Navigation](https://reactnavigation.org) (bottom tabs + native stack)
-
-## Estrutura
+Este repositório é um monorepo com duas aplicações:
 
 ```
-src/
-  components/   componentes reutilizáveis (cards, botões, badges)
-  data/         dados mock (dispositivos, planos, regiões)
-  navigation/   configuração de tabs e stack
-  screens/      telas do app
-  theme/        paleta de cores
-  types/        tipos compartilhados
+apps/
+  web/     Site Next.js — landing page, dashboard, criação de dispositivo,
+           tela do celular na nuvem, painel administrativo, botão de download/instalação
+  mobile/  App Expo (React Native) — cliente mobile com a mesma proposta
 ```
 
-Os dados de dispositivos e planos são mockados em `src/data/mock.ts`. Para conectar a um
-backend real de streaming (WebRTC/RTSP para o dispositivo Android virtual, API de billing,
-autenticação etc.), substitua essa camada por chamadas de API mantendo os mesmos tipos em
-`src/types`.
+## apps/web
 
-## Rodando o projeto
+Plataforma principal, especificada em detalhe no documento de requisitos do produto:
+
+- **Landing page** com o conceito ("Seu smartphone completo rodando na nuvem") e um botão
+  **Baixar app** que abre um modal explicando o que vai acontecer (Confirmar/Cancelar). Ao
+  confirmar, o app é instalado como PWA de verdade quando o navegador suporta (prompt nativo
+  `beforeinstallprompt`) ou, caso contrário, mostra uma animação simulando o ícone sendo
+  adicionado à tela inicial do dispositivo.
+- **Dashboard** ("Meus dispositivos"): cabeçalho com conta, notificações, configurações e
+  botão de criar dispositivo; grade de dispositivos com status (🟢 Online, 🟡 Inicializando,
+  🔵 Manutenção, 🔴 Offline, ⚫ Encerrado), filtros e resumo.
+- **Criar dispositivo**: wizard em 3 passos — sistema (Android/iOS), modelo/configuração
+  (Galaxy S26 Ultra ou iPhone 17 Pro Max, 512 GB/12 GB ou 1 TB/16 GB) e confirmação.
+- **Tela do dispositivo**: moldura de celular com apps, gestos (Home/Voltar/Apps no Android,
+  Control Center/Notificações no iOS), Wi-Fi, bateria infinita (∞ sempre carregando),
+  informações de hardware/uso/rede/sessão e ações (abrir, reiniciar, desligar, renomear,
+  duplicar, encerrar).
+- **Painel administrativo** (`/admin`): visão geral da infraestrutura (dispositivos por
+  plataforma, uso de CPU/RAM/Storage da nuvem).
+
+Dados de dispositivos são mantidos em um store em memória no servidor (`lib/store.ts`), com
+rotas de API reais (`app/api/**`) para criar, listar, atualizar e excluir dispositivos. A
+emulação real de Android/iOS (streaming WebRTC, containers, GPU) não roda neste ambiente de
+demonstração — é o próximo passo para produção, descrito no documento de arquitetura.
+
+### Rodando
 
 ```bash
+cd apps/web
 npm install
-npm run start   # abre o Expo Dev Tools (escolha android/ios/web)
+npm run dev
+```
+
+## apps/mobile
+
+Cliente Expo (React Native + TypeScript) com dashboard de dispositivos, visualizador de
+streaming simulado, planos (por hora / assinatura) e perfil. Veja `apps/mobile/README.md`.
+
+```bash
+cd apps/mobile
+npm install
+npm run start
 ```
