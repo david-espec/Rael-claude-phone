@@ -40,7 +40,7 @@ export function DeviceListCard({ device }: { device: CloudDevice }) {
 
       {device.autoPlayEnabled && (
         <div className="flex items-center gap-1.5 rounded-lg border border-accent/40 bg-accent/10 px-2.5 py-1.5 text-xs font-semibold text-accent">
-          🤖 Farmando {device.autoPlayGame} 24/7
+          🎮 Farmando {device.autoPlayGame} 24/7
         </div>
       )}
 

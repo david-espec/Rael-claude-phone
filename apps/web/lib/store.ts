@@ -44,7 +44,7 @@ function seedDevices(): CloudDevice[] {
       id: 'seed-android-2',
       deviceCode: 'CLOUD-AND-000002',
       userId: 'demo-user',
-      name: 'Galaxy S26 Ultra #02',
+      name: 'Farm Roblox #02',
       platform: 'android',
       modelId: galaxy.id,
       modelName: galaxy.name,
@@ -63,7 +63,7 @@ function seedDevices(): CloudDevice[] {
       uptimeSeconds: 60 * (60 * 24 * 12 + 60 * 3),
       apps: androidApps,
       autoPlayEnabled: true,
-      autoPlayGame: 'Free Fire',
+      autoPlayGame: 'Roblox',
       autoPlaySince: new Date(now - 1000 * 60 * 60 * 30).toISOString(),
     },
     {

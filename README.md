@@ -2,7 +2,7 @@
 
 "Tudo virtual, nas nuvens, dentro de um app." Um Android ou iPhone completo, rodando em um
 data center e transmitido para o seu navegador ou celular — com bateria infinita, sempre
-ligado, sem ocupar memória do seu aparelho físico.
+ligado, farmando Roblox por você mesmo enquanto você está offline.
 
 Este repositório é um monorepo com duas aplicações:
 
@@ -27,10 +27,13 @@ Plataforma principal, especificada em detalhe no documento de requisitos do prod
   🔵 Manutenção, 🔴 Offline, ⚫ Encerrado), filtros e resumo.
 - **Criar dispositivo**: wizard em 3 passos — sistema (Android/iOS), modelo/configuração
   (Galaxy S26 Ultra ou iPhone 17 Pro Max, 512 GB/12 GB ou 1 TB/16 GB) e confirmação.
-- **Tela do dispositivo**: moldura de celular com apps, gestos (Home/Voltar/Apps no Android,
-  Control Center/Notificações no iOS), Wi-Fi, bateria infinita (∞ sempre carregando),
-  informações de hardware/uso/rede/sessão e ações (abrir, reiniciar, desligar, renomear,
-  duplicar, encerrar).
+- **Tela do dispositivo**: moldura de celular com apps (Roblox já instalado), gestos
+  (Home/Voltar/Apps no Android, Control Center/Notificações no iOS), Wi-Fi, bateria infinita
+  (∞ sempre carregando), informações de hardware/uso/rede/sessão e ações (abrir, reiniciar,
+  desligar, renomear, duplicar, encerrar).
+- **Farm 24/7**: o recurso central — ativa o auto-play em qualquer dispositivo (um clique
+  para farmar Roblox, ou digite outro jogo) e acompanha "farmando há Xd Xh" ao vivo na tela
+  do dispositivo, no card do dashboard e num filtro dedicado.
 - **Painel administrativo** (`/admin`): visão geral da infraestrutura (dispositivos por
   plataforma, uso de CPU/RAM/Storage da nuvem).
 

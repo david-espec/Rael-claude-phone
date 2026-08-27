@@ -13,9 +13,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Rael Cloud Phone — Seu smartphone completo na nuvem",
+  title: "Rael Cloud Phone — Farme Roblox 24/7 na nuvem",
   description:
-    "Crie celulares Android e iPhone virtuais que rodam 24/7 na nuvem, com bateria infinita, e acesse de qualquer lugar pelo navegador.",
+    "Crie celulares Android e iPhone virtuais que rodam 24/7 na nuvem, com bateria infinita, farmando Roblox sozinhos mesmo com você offline.",
   manifest: "/manifest.webmanifest",
   icons: {
     icon: "/favicon-32.png",
