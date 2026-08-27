@@ -62,9 +62,10 @@ export function DeviceScreenClient({ device: initialDevice }: { device: CloudDev
     }
   }
 
-  async function enableFarm() {
-    if (!gameInput.trim()) return;
-    await runAction('autoplay', { enabled: true, game: gameInput.trim() });
+  async function enableFarm(game?: string) {
+    const finalGame = (game ?? gameInput).trim();
+    if (!finalGame) return;
+    await runAction('autoplay', { enabled: true, game: finalGame });
     setShowFarmForm(false);
     setGameInput('');
   }
@@ -92,7 +93,7 @@ export function DeviceScreenClient({ device: initialDevice }: { device: CloudDev
 
             {device.status === 'online' && device.autoPlayEnabled && (
               <div className="mx-4 mt-3 flex items-center gap-1.5 rounded-lg bg-accent/20 px-2.5 py-1.5 text-[10px] font-semibold text-accent">
-                🤖 Farmando {device.autoPlayGame} sozinho
+                🎮 Farmando {device.autoPlayGame} sozinho
               </div>
             )}
 
@@ -200,7 +201,7 @@ export function DeviceScreenClient({ device: initialDevice }: { device: CloudDev
           {device.autoPlayEnabled ? (
             <div className="flex flex-wrap items-center justify-between gap-3">
               <div>
-                <p className="flex items-center gap-2 text-sm font-bold text-accent">🤖 Farmando 24/7</p>
+                <p className="flex items-center gap-2 text-sm font-bold text-accent">🎮 Farmando 24/7</p>
                 <p className="mt-1 text-sm text-muted">
                   Jogando <span className="font-semibold text-foreground">{device.autoPlayGame}</span> sozinho há{' '}
                   {device.autoPlaySince ? formatDurationSince(device.autoPlaySince) : '0d 0h 0min'} — pode fechar o
@@ -223,9 +224,10 @@ export function DeviceScreenClient({ device: initialDevice }: { device: CloudDev
                   autoFocus
                   value={gameInput}
                   onChange={(e) => setGameInput(e.target.value)}
-                  placeholder="Ex: Free Fire, Coin Master…"
+                  placeholder="Roblox"
                   className="mt-2 w-full max-w-xs rounded-lg border border-border bg-surface-alt px-3 py-2 text-sm outline-none focus:border-primary"
                 />
+                <p className="mt-1 text-[11px] text-faint">Recomendado: Roblox — mas pode ser qualquer jogo.</p>
               </div>
               <div className="flex gap-2">
                 <button
@@ -249,15 +251,24 @@ export function DeviceScreenClient({ device: initialDevice }: { device: CloudDev
               <div>
                 <p className="text-sm font-bold">Farm 24/7 desligado</p>
                 <p className="mt-1 text-sm text-muted">
-                  Ative para o dispositivo jogar sozinho com bateria infinita, mesmo com você offline.
+                  Ative e deixe o Roblox rendendo sozinho, com bateria infinita, mesmo com você offline.
                 </p>
               </div>
-              <button
-                onClick={() => setShowFarmForm(true)}
-                className="rounded-lg bg-accent px-4 py-2 text-xs font-bold text-background"
-              >
-                Ativar farm
-              </button>
+              <div className="flex gap-2">
+                <button
+                  onClick={() => setShowFarmForm(true)}
+                  className="rounded-lg border border-border px-3 py-2 text-xs font-semibold hover:bg-surface-alt"
+                >
+                  Outro jogo
+                </button>
+                <button
+                  onClick={() => enableFarm('Roblox')}
+                  disabled={busy === 'autoplay'}
+                  className="rounded-lg bg-accent px-4 py-2 text-xs font-bold text-background disabled:opacity-50"
+                >
+                  🎮 Farmar Roblox 24/7
+                </button>
+              </div>
             </div>
           )}
         </div>

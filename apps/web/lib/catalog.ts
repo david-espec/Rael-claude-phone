@@ -28,6 +28,7 @@ export const deviceCatalog: DeviceModel[] = [
 ];
 
 export const androidApps = [
+  { id: 'roblox', name: 'Roblox', icon: '🎮' },
   { id: 'play-store', name: 'Play Store', icon: '🛒' },
   { id: 'browser', name: 'Navegador', icon: '🌐' },
   { id: 'camera', name: 'Câmera', icon: '📷' },
@@ -41,6 +42,7 @@ export const androidApps = [
 ];
 
 export const iosApps = [
+  { id: 'roblox', name: 'Roblox', icon: '🎮' },
   { id: 'app-store', name: 'App Store', icon: '🛍️' },
   { id: 'safari', name: 'Safari', icon: '🧭' },
   { id: 'camera', name: 'Câmera', icon: '📷' },

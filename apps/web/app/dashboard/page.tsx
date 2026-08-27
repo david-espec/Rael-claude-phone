@@ -11,7 +11,7 @@ export default function DashboardPage() {
       <div>
         <h1 className="text-2xl font-extrabold">Meus dispositivos</h1>
         <p className="mt-1 text-sm text-muted">
-          Todos os seus celulares na nuvem, sempre ligados e prontos para usar.
+          Todos os seus celulares na nuvem, sempre ligados e farmando Roblox por você.
         </p>
       </div>
       <DeviceGrid devices={devices} />

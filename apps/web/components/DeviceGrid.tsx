@@ -8,7 +8,7 @@ type FilterKey = 'all' | 'android' | 'ios' | 'online' | 'offline' | 'starting' |
 
 const filters: { key: FilterKey; label: string }[] = [
   { key: 'all', label: 'Todos' },
-  { key: 'farming', label: '🤖 Farmando' },
+  { key: 'farming', label: '🎮 Farmando' },
   { key: 'android', label: 'Android' },
   { key: 'ios', label: 'iOS' },
   { key: 'online', label: 'Online' },
@@ -53,7 +53,7 @@ export function DeviceGrid({ devices }: { devices: CloudDevice[] }) {
     <div className="flex flex-col gap-6">
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
         <SummaryTile label="Total" value={summary.total} />
-        <SummaryTile label="🤖 Farmando" value={summary.farming} accent />
+        <SummaryTile label="🎮 Farmando" value={summary.farming} accent />
         <SummaryTile label="🟢 Online" value={summary.online} />
         <SummaryTile label="🔴 Offline" value={summary.offline} />
       </div>

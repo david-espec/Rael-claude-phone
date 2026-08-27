@@ -16,7 +16,7 @@ export const mockDevices: CloudDevice[] = [
   },
   {
     id: 'dev-2',
-    name: 'Farm de Jogos',
+    name: 'Farm Roblox',
     androidVersion: 'Android 13',
     region: 'Frankfurt, DE',
     status: 'auto-play',

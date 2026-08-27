@@ -8,14 +8,14 @@ import { InfiniteBattery } from '@/components/InfiniteBattery';
 
 const features = [
   {
-    icon: '🤖',
-    title: 'Farm 24/7, mesmo offline',
-    text: 'Ative o auto-play em qualquer dispositivo e deixe seu jogo rendendo sozinho — recompensas diárias, eventos e grind continuam mesmo com você offline ou dormindo.',
+    icon: '🎮',
+    title: 'Roblox farmando 24/7, mesmo offline',
+    text: 'Ative o auto-play e deixe seu Roblox rendendo sozinho — Robux, eventos, passes e grind continuam mesmo com você offline ou dormindo.',
   },
   {
     icon: '📱',
     title: 'Android e iPhone de verdade',
-    text: 'Crie um Galaxy S26 Ultra ou um iPhone 17 Pro Max virtual, com o sistema operacional original rodando na nuvem.',
+    text: 'Crie um Galaxy S26 Ultra ou um iPhone 17 Pro Max virtual, com o Roblox instalado e o sistema operacional original rodando na nuvem.',
   },
   {
     icon: '🔋',
@@ -30,7 +30,7 @@ const features = [
   {
     icon: '🧩',
     title: 'Multidispositivo',
-    text: 'Opere vários celulares simultaneamente, cada um isolado, com armazenamento, rede e apps próprios.',
+    text: 'Farme Roblox em várias contas ao mesmo tempo, cada dispositivo isolado, com armazenamento, rede e apps próprios.',
   },
   {
     icon: '⚡',
@@ -70,21 +70,21 @@ export default function Home() {
       <main className="flex-1">
         <section className="mx-auto flex w-full max-w-6xl flex-col items-center gap-8 px-6 py-16 text-center">
           <span className="rounded-full border border-border bg-surface px-3 py-1 text-xs font-semibold text-accent">
-            Tudo virtual, nas nuvens, dentro de um app
+            🎮 Feito pra farmar Roblox 24/7
           </span>
           <h1 className="max-w-2xl text-4xl font-extrabold leading-tight tracking-tight sm:text-5xl">
-            Seu smartphone completo <span className="text-primary">rodando na nuvem</span>
+            Seu Roblox rodando na nuvem, <span className="text-primary">24 horas por dia</span>
           </h1>
           <p className="max-w-xl text-base leading-relaxed text-muted sm:text-lg">
-            Crie dispositivos Android ou iPhone virtuais e deixe seus jogos farmando sozinhos 24 horas por dia
-            — mesmo com você offline — sem ocupar memória nem gastar bateria do seu aparelho físico.
+            Crie dispositivos Android ou iPhone virtuais com Roblox instalado e deixe farmando sozinho — mesmo
+            com você offline — sem ocupar memória nem gastar bateria do seu aparelho físico.
           </p>
           <div className="flex flex-col gap-3 sm:flex-row">
             <Link
               href="/dashboard"
               className="rounded-xl bg-primary px-6 py-3 text-sm font-bold text-background transition hover:bg-primary-dark"
             >
-              Criar meu primeiro dispositivo
+              Criar meu dispositivo pra Roblox
             </Link>
             <button
               onClick={() => setDownloadOpen(true)}
@@ -117,7 +117,7 @@ export default function Home() {
         <section className="mx-auto w-full max-w-6xl px-6 pb-24">
           <div className="flex flex-col items-center justify-between gap-6 rounded-3xl border border-border bg-surface p-10 text-center sm:flex-row sm:text-left">
             <div>
-              <h2 className="text-xl font-bold">Pronto para ter um celular que nunca desliga?</h2>
+              <h2 className="text-xl font-bold">Pronto pra deixar o Roblox rendendo sozinho?</h2>
               <p className="mt-2 max-w-md text-sm text-muted">
                 Adicione o Rael Cloud Phone à tela inicial do seu dispositivo e acesse seus celulares na nuvem em
                 um toque.
