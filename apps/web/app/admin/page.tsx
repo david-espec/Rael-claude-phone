@@ -1,21 +1,27 @@
+'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
 import { StatusBadge } from '@/components/StatusBadge';
+import { withBasePath } from '@/lib/basePath';
+import { useDeviceStore } from '@/lib/deviceStore';
 import { formatStorage } from '@/lib/format';
-import { getInfraStats, listDevices } from '@/lib/store';
-
-export const dynamic = 'force-dynamic';
 
 export default function AdminPage() {
-  const stats = getInfraStats();
-  const devices = listDevices();
+  const { devices, stats } = useDeviceStore();
 
   return (
     <div className="flex flex-1 flex-col bg-background">
       <header className="border-b border-border">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
           <Link href="/dashboard" className="flex items-center gap-2">
-            <Image src="/icons/icon-192.png" alt="Rael Cloud Phone" width={28} height={28} className="rounded-lg" />
+            <Image
+              src={withBasePath('/icons/icon-192.png')}
+              alt="Rael Cloud Phone"
+              width={28}
+              height={28}
+              className="rounded-lg"
+            />
             <span className="text-sm font-bold">Rael Cloud Phone · Admin</span>
           </Link>
           <Link href="/dashboard" className="text-xs font-semibold text-muted hover:text-foreground">

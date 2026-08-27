@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { DownloadModal } from '@/components/DownloadModal';
 import { InfiniteBattery } from '@/components/InfiniteBattery';
+import { withBasePath } from '@/lib/basePath';
 
 const features = [
   {
@@ -51,7 +52,13 @@ export default function Home() {
     <div className="flex flex-1 flex-col bg-background">
       <header className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-6">
         <div className="flex items-center gap-2">
-          <Image src="/icons/icon-192.png" alt="Rael Cloud Phone" width={32} height={32} className="rounded-lg" />
+          <Image
+            src={withBasePath('/icons/icon-192.png')}
+            alt="Rael Cloud Phone"
+            width={32}
+            height={32}
+            className="rounded-lg"
+          />
           <span className="text-sm font-bold tracking-tight">Rael Cloud Phone</span>
         </div>
         <nav className="flex items-center gap-4">

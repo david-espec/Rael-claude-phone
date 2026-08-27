@@ -144,9 +144,10 @@ precisa ser um ambiente computacional interativo.
 - **Frontend**: Next.js + React + TypeScript (dashboard, criação, gerenciamento, tela do
   dispositivo, WebRTC, autenticação, configurações) — implementado em `apps/web`.
 - **Backend**: NestJS (API, autenticação, gerenciamento de dispositivos, sessões, WebSocket,
-  comunicação com a infraestrutura). Na demonstração atual, essas responsabilidades vivem
-  como API Routes do Next.js sobre um store em memória (`apps/web/lib/store.ts`); migrar
-  para um serviço NestJS dedicado + PostgreSQL é o próximo passo natural.
+  comunicação com a infraestrutura). Na demonstração atual, publicada como site estático no
+  GitHub Pages, essas responsabilidades vivem inteiramente no navegador (`localStorage`, via
+  `apps/web/lib/deviceStore.tsx`); migrar para um serviço NestJS dedicado + PostgreSQL é o
+  próximo passo natural para dados compartilhados entre dispositivos/usuários.
 - **Banco**: PostgreSQL · **Cache**: Redis · **Comunicação**: WebSocket · **Streaming**:
   WebRTC · **Containers**: Docker · **Orquestração**: Kubernetes.
 - **Android**: Android Emulator / infraestrutura de virtualização.

@@ -3,12 +3,14 @@
 import { useRouter } from 'next/navigation';
 import { useMemo, useState } from 'react';
 import { deviceCatalog } from '@/lib/catalog';
+import { useDeviceStore } from '@/lib/deviceStore';
 import { Platform } from '@/lib/types';
 
 type Step = 1 | 2 | 3;
 
 export default function NewDevicePage() {
   const router = useRouter();
+  const { createDevice } = useDeviceStore();
   const [step, setStep] = useState<Step>(1);
   const [platform, setPlatform] = useState<Platform | null>(null);
   const [configId, setConfigId] = useState<string | null>(null);
@@ -34,15 +36,8 @@ export default function NewDevicePage() {
     setSubmitting(true);
     setError(null);
     try {
-      const res = await fetch('/api/devices', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ platform, modelId: model.id, configId, name: name || undefined }),
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error ?? 'Erro ao criar dispositivo');
-      router.push(`/dashboard/devices/${data.device.id}`);
-      router.refresh();
+      const device = createDevice({ platform, modelId: model.id, configId, name: name || undefined });
+      router.push(`/dashboard/devices/view?id=${device.id}`);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Erro ao criar dispositivo');
       setSubmitting(false);

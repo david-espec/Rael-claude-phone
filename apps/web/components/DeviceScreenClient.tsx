@@ -3,13 +3,14 @@
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { formatDurationSince, formatRelativeTime, formatStorage, formatUptime } from '@/lib/format';
+import { useDeviceStore } from '@/lib/deviceStore';
 import { CloudDevice } from '@/lib/types';
 import { InfiniteBattery } from './InfiniteBattery';
 import { StatusBadge } from './StatusBadge';
 
-export function DeviceScreenClient({ device: initialDevice }: { device: CloudDevice }) {
+export function DeviceScreenClient({ device }: { device: CloudDevice }) {
   const router = useRouter();
-  const [device, setDevice] = useState(initialDevice);
+  const { updateDevice, duplicateDevice, deleteDevice } = useDeviceStore();
   const [busy, setBusy] = useState<string | null>(null);
   const [renaming, setRenaming] = useState(false);
   const [newName, setNewName] = useState(device.name);
@@ -18,60 +19,42 @@ export function DeviceScreenClient({ device: initialDevice }: { device: CloudDev
   const [showFarmForm, setShowFarmForm] = useState(false);
   const [gameInput, setGameInput] = useState('');
 
-  async function runAction(action: string, body: Record<string, unknown> = {}) {
+  function runAction(action: string, patch: Partial<CloudDevice>) {
     setBusy(action);
-    try {
-      const res = await fetch(`/api/devices/${device.id}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action, ...body }),
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error);
-      setDevice(data.device);
-      router.refresh();
-    } finally {
-      setBusy(null);
-    }
+    updateDevice(device.id, patch);
+    setBusy(null);
   }
 
-  async function handleDelete() {
+  function handleDelete() {
     setBusy('delete');
-    try {
-      await fetch(`/api/devices/${device.id}`, { method: 'DELETE' });
-      router.push('/dashboard');
-      router.refresh();
-    } finally {
-      setBusy(null);
-    }
+    deleteDevice(device.id);
+    router.push('/dashboard');
   }
 
-  async function handleDuplicate() {
+  function handleDuplicate() {
     setBusy('duplicate');
-    try {
-      const res = await fetch(`/api/devices/${device.id}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: 'duplicate' }),
-      });
-      const data = await res.json();
-      if (res.ok) router.push(`/dashboard/devices/${data.device.id}`);
-      router.refresh();
-    } finally {
-      setBusy(null);
-    }
+    const created = duplicateDevice(device.id);
+    setBusy(null);
+    if (created) router.push(`/dashboard/devices/view?id=${created.id}`);
   }
 
-  async function enableFarm(game?: string) {
+  function enableFarm(game?: string) {
     const finalGame = (game ?? gameInput).trim();
     if (!finalGame) return;
-    await runAction('autoplay', { enabled: true, game: finalGame });
+    const now = new Date().toISOString();
+    runAction('autoplay', {
+      autoPlayEnabled: true,
+      autoPlayGame: finalGame,
+      autoPlaySince: now,
+      status: 'online',
+      lastConnectedAt: now,
+    });
     setShowFarmForm(false);
     setGameInput('');
   }
 
-  async function disableFarm() {
-    await runAction('autoplay', { enabled: false });
+  function disableFarm() {
+    runAction('autoplay', { autoPlayEnabled: false, autoPlaySince: null });
   }
 
   const isOn = device.status === 'online' || device.status === 'starting';
@@ -274,13 +257,22 @@ export function DeviceScreenClient({ device: initialDevice }: { device: CloudDev
         </div>
 
         <div className="flex flex-wrap gap-2">
-          <ActionButton label="Abrir" busy={busy === 'open'} disabled={isOn} onClick={() => runAction('open')} />
-          <ActionButton label="Reiniciar" busy={busy === 'restart'} onClick={() => runAction('restart')} />
+          <ActionButton
+            label="Abrir"
+            busy={busy === 'open'}
+            disabled={isOn}
+            onClick={() => runAction('open', { status: 'online', lastConnectedAt: new Date().toISOString() })}
+          />
+          <ActionButton
+            label="Reiniciar"
+            busy={busy === 'restart'}
+            onClick={() => runAction('restart', { status: 'starting', lastConnectedAt: new Date().toISOString() })}
+          />
           <ActionButton
             label="Desligar"
             busy={busy === 'shutdown'}
             disabled={!isOn}
-            onClick={() => runAction('shutdown')}
+            onClick={() => runAction('shutdown', { status: 'offline', autoPlayEnabled: false, autoPlaySince: null })}
           />
           <ActionButton label="Renomear" onClick={() => setRenaming(true)} />
           <ActionButton label="Duplicar" busy={busy === 'duplicate'} onClick={handleDuplicate} />
@@ -333,7 +325,7 @@ export function DeviceScreenClient({ device: initialDevice }: { device: CloudDev
               <button
                 onClick={() => {
                   setConfirmingTerminate(false);
-                  runAction('terminate');
+                  runAction('terminate', { status: 'terminated', autoPlayEnabled: false, autoPlaySince: null });
                 }}
                 className="flex-1 rounded-xl bg-danger py-3 text-sm font-bold text-background"
               >
