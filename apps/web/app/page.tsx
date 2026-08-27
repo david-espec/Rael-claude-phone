@@ -8,6 +8,11 @@ import { InfiniteBattery } from '@/components/InfiniteBattery';
 
 const features = [
   {
+    icon: '🤖',
+    title: 'Farm 24/7, mesmo offline',
+    text: 'Ative o auto-play em qualquer dispositivo e deixe seu jogo rendendo sozinho — recompensas diárias, eventos e grind continuam mesmo com você offline ou dormindo.',
+  },
+  {
     icon: '📱',
     title: 'Android e iPhone de verdade',
     text: 'Crie um Galaxy S26 Ultra ou um iPhone 17 Pro Max virtual, com o sistema operacional original rodando na nuvem.',
@@ -71,8 +76,8 @@ export default function Home() {
             Seu smartphone completo <span className="text-primary">rodando na nuvem</span>
           </h1>
           <p className="max-w-xl text-base leading-relaxed text-muted sm:text-lg">
-            Crie dispositivos Android ou iPhone virtuais, use apps, navegue, jogue e mantenha tudo funcionando
-            24 horas por dia — sem ocupar memória, sem gastar bateria do seu aparelho físico.
+            Crie dispositivos Android ou iPhone virtuais e deixe seus jogos farmando sozinhos 24 horas por dia
+            — mesmo com você offline — sem ocupar memória nem gastar bateria do seu aparelho físico.
           </p>
           <div className="flex flex-col gap-3 sm:flex-row">
             <Link

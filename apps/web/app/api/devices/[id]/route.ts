@@ -29,10 +29,10 @@ export async function PATCH(request: NextRequest, { params }: Params) {
       patch = { status: 'starting', lastConnectedAt: now };
       break;
     case 'shutdown':
-      patch = { status: 'offline' };
+      patch = { status: 'offline', autoPlayEnabled: false, autoPlaySince: null };
       break;
     case 'terminate':
-      patch = { status: 'terminated' };
+      patch = { status: 'terminated', autoPlayEnabled: false, autoPlaySince: null };
       break;
     case 'open':
       patch = { status: 'online', lastConnectedAt: now };
@@ -43,6 +43,17 @@ export async function PATCH(request: NextRequest, { params }: Params) {
       }
       patch = { name: body.name.trim() };
       break;
+    case 'autoplay': {
+      const enabled = Boolean(body.enabled);
+      if (enabled) {
+        const game = typeof body.game === 'string' ? body.game.trim() : '';
+        if (!game) return NextResponse.json({ error: 'Informe o jogo para farmar' }, { status: 400 });
+        patch = { autoPlayEnabled: true, autoPlayGame: game, autoPlaySince: now, status: 'online', lastConnectedAt: now };
+      } else {
+        patch = { autoPlayEnabled: false, autoPlaySince: null };
+      }
+      break;
+    }
     default:
       return NextResponse.json({ error: 'Ação desconhecida' }, { status: 400 });
   }

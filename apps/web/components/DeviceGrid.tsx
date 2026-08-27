@@ -4,10 +4,11 @@ import { useMemo, useState } from 'react';
 import { CloudDevice } from '@/lib/types';
 import { DeviceListCard } from './DeviceListCard';
 
-type FilterKey = 'all' | 'android' | 'ios' | 'online' | 'offline' | 'starting';
+type FilterKey = 'all' | 'android' | 'ios' | 'online' | 'offline' | 'starting' | 'farming';
 
 const filters: { key: FilterKey; label: string }[] = [
   { key: 'all', label: 'Todos' },
+  { key: 'farming', label: '🤖 Farmando' },
   { key: 'android', label: 'Android' },
   { key: 'ios', label: 'iOS' },
   { key: 'online', label: 'Online' },
@@ -24,6 +25,7 @@ export function DeviceGrid({ devices }: { devices: CloudDevice[] }) {
       online: devices.filter((d) => d.status === 'online').length,
       starting: devices.filter((d) => d.status === 'starting').length,
       offline: devices.filter((d) => d.status === 'offline' || d.status === 'terminated').length,
+      farming: devices.filter((d) => d.autoPlayEnabled).length,
     }),
     [devices]
   );
@@ -40,6 +42,8 @@ export function DeviceGrid({ devices }: { devices: CloudDevice[] }) {
         return devices.filter((d) => d.status === 'offline' || d.status === 'terminated');
       case 'starting':
         return devices.filter((d) => d.status === 'starting');
+      case 'farming':
+        return devices.filter((d) => d.autoPlayEnabled);
       default:
         return devices;
     }
@@ -49,8 +53,8 @@ export function DeviceGrid({ devices }: { devices: CloudDevice[] }) {
     <div className="flex flex-col gap-6">
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
         <SummaryTile label="Total" value={summary.total} />
+        <SummaryTile label="🤖 Farmando" value={summary.farming} accent />
         <SummaryTile label="🟢 Online" value={summary.online} />
-        <SummaryTile label="🟡 Inicializando" value={summary.starting} />
         <SummaryTile label="🔴 Offline" value={summary.offline} />
       </div>
 
@@ -85,10 +89,10 @@ export function DeviceGrid({ devices }: { devices: CloudDevice[] }) {
   );
 }
 
-function SummaryTile({ label, value }: { label: string; value: number }) {
+function SummaryTile({ label, value, accent }: { label: string; value: number; accent?: boolean }) {
   return (
     <div className="rounded-2xl border border-border bg-surface px-4 py-3">
-      <p className="text-lg font-extrabold">{value}</p>
+      <p className={`text-lg font-extrabold ${accent ? 'text-accent' : ''}`}>{value}</p>
       <p className="text-xs text-muted">{label}</p>
     </div>
   );

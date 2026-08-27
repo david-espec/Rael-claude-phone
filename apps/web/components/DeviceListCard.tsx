@@ -38,6 +38,12 @@ export function DeviceListCard({ device }: { device: CloudDevice }) {
         </span>
       </div>
 
+      {device.autoPlayEnabled && (
+        <div className="flex items-center gap-1.5 rounded-lg border border-accent/40 bg-accent/10 px-2.5 py-1.5 text-xs font-semibold text-accent">
+          🤖 Farmando {device.autoPlayGame} 24/7
+        </div>
+      )}
+
       <div className="h-1.5 w-full overflow-hidden rounded-full bg-surface-alt">
         <div className="h-full rounded-full bg-primary" style={{ width: `${storagePct}%` }} />
       </div>

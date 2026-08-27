@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { formatRelativeTime, formatStorage, formatUptime } from '@/lib/format';
+import { formatDurationSince, formatRelativeTime, formatStorage, formatUptime } from '@/lib/format';
 import { CloudDevice } from '@/lib/types';
 import { InfiniteBattery } from './InfiniteBattery';
 import { StatusBadge } from './StatusBadge';
@@ -15,6 +15,8 @@ export function DeviceScreenClient({ device: initialDevice }: { device: CloudDev
   const [newName, setNewName] = useState(device.name);
   const [confirmingTerminate, setConfirmingTerminate] = useState(false);
   const [openApp, setOpenApp] = useState<string | null>(null);
+  const [showFarmForm, setShowFarmForm] = useState(false);
+  const [gameInput, setGameInput] = useState('');
 
   async function runAction(action: string, body: Record<string, unknown> = {}) {
     setBusy(action);
@@ -60,6 +62,17 @@ export function DeviceScreenClient({ device: initialDevice }: { device: CloudDev
     }
   }
 
+  async function enableFarm() {
+    if (!gameInput.trim()) return;
+    await runAction('autoplay', { enabled: true, game: gameInput.trim() });
+    setShowFarmForm(false);
+    setGameInput('');
+  }
+
+  async function disableFarm() {
+    await runAction('autoplay', { enabled: false });
+  }
+
   const isOn = device.status === 'online' || device.status === 'starting';
 
   return (
@@ -76,6 +89,12 @@ export function DeviceScreenClient({ device: initialDevice }: { device: CloudDev
                 <InfiniteBattery compact />
               </div>
             </div>
+
+            {device.status === 'online' && device.autoPlayEnabled && (
+              <div className="mx-4 mt-3 flex items-center gap-1.5 rounded-lg bg-accent/20 px-2.5 py-1.5 text-[10px] font-semibold text-accent">
+                🤖 Farmando {device.autoPlayGame} sozinho
+              </div>
+            )}
 
             {device.status === 'online' && (
               <div className="grid flex-1 grid-cols-4 content-start gap-4 p-5">
@@ -171,6 +190,76 @@ export function DeviceScreenClient({ device: initialDevice }: { device: CloudDev
             </p>
           </div>
           <StatusBadge status={device.status} />
+        </div>
+
+        <div
+          className={`rounded-2xl border p-5 ${
+            device.autoPlayEnabled ? 'border-accent/50 bg-accent/10' : 'border-border bg-surface'
+          }`}
+        >
+          {device.autoPlayEnabled ? (
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <p className="flex items-center gap-2 text-sm font-bold text-accent">🤖 Farmando 24/7</p>
+                <p className="mt-1 text-sm text-muted">
+                  Jogando <span className="font-semibold text-foreground">{device.autoPlayGame}</span> sozinho há{' '}
+                  {device.autoPlaySince ? formatDurationSince(device.autoPlaySince) : '0d 0h 0min'} — pode fechar o
+                  navegador que ele continua rodando.
+                </p>
+              </div>
+              <ActionButton label="Parar farm" tone="danger" busy={busy === 'autoplay'} onClick={disableFarm} />
+            </div>
+          ) : showFarmForm ? (
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                enableFarm();
+              }}
+              className="flex flex-wrap items-center gap-3"
+            >
+              <div className="flex-1">
+                <p className="text-sm font-bold">Qual jogo farmar 24/7?</p>
+                <input
+                  autoFocus
+                  value={gameInput}
+                  onChange={(e) => setGameInput(e.target.value)}
+                  placeholder="Ex: Free Fire, Coin Master…"
+                  className="mt-2 w-full max-w-xs rounded-lg border border-border bg-surface-alt px-3 py-2 text-sm outline-none focus:border-primary"
+                />
+              </div>
+              <div className="flex gap-2">
+                <button
+                  type="button"
+                  onClick={() => setShowFarmForm(false)}
+                  className="rounded-lg border border-border px-3 py-2 text-xs font-semibold hover:bg-surface-alt"
+                >
+                  Cancelar
+                </button>
+                <button
+                  type="submit"
+                  disabled={busy === 'autoplay' || !gameInput.trim()}
+                  className="rounded-lg bg-accent px-4 py-2 text-xs font-bold text-background disabled:opacity-50"
+                >
+                  Iniciar farm
+                </button>
+              </div>
+            </form>
+          ) : (
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <p className="text-sm font-bold">Farm 24/7 desligado</p>
+                <p className="mt-1 text-sm text-muted">
+                  Ative para o dispositivo jogar sozinho com bateria infinita, mesmo com você offline.
+                </p>
+              </div>
+              <button
+                onClick={() => setShowFarmForm(true)}
+                className="rounded-lg bg-accent px-4 py-2 text-xs font-bold text-background"
+              >
+                Ativar farm
+              </button>
+            </div>
+          )}
         </div>
 
         <div className="flex flex-wrap gap-2">

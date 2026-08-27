@@ -36,6 +36,9 @@ function seedDevices(): CloudDevice[] {
       lastConnectedAt: new Date(now - 1000 * 60 * 2).toISOString(),
       uptimeSeconds: 60 * (60 * 24 * 37 + 60 * 14 + 32),
       apps: androidApps,
+      autoPlayEnabled: false,
+      autoPlayGame: null,
+      autoPlaySince: null,
     },
     {
       id: 'seed-android-2',
@@ -59,6 +62,9 @@ function seedDevices(): CloudDevice[] {
       lastConnectedAt: new Date(now - 1000 * 60 * 20).toISOString(),
       uptimeSeconds: 60 * (60 * 24 * 12 + 60 * 3),
       apps: androidApps,
+      autoPlayEnabled: true,
+      autoPlayGame: 'Free Fire',
+      autoPlaySince: new Date(now - 1000 * 60 * 60 * 30).toISOString(),
     },
     {
       id: 'seed-ios-1',
@@ -82,6 +88,9 @@ function seedDevices(): CloudDevice[] {
       lastConnectedAt: new Date(now - 1000 * 60 * 5).toISOString(),
       uptimeSeconds: 60 * (60 * 24 * 5 + 60 * 6),
       apps: iosApps,
+      autoPlayEnabled: false,
+      autoPlayGame: null,
+      autoPlaySince: null,
     },
   ];
 }
@@ -167,6 +176,9 @@ export function createDevice(input: {
     lastConnectedAt: now,
     uptimeSeconds: 0,
     apps: input.platform === 'android' ? androidApps : iosApps,
+    autoPlayEnabled: false,
+    autoPlayGame: null,
+    autoPlaySince: null,
   };
 
   store.devices.unshift(device);

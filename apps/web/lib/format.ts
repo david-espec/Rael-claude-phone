@@ -9,6 +9,11 @@ export function formatStorage(gb: number): string {
   return gb >= 1024 ? `${gb / 1024} TB` : `${gb} GB`;
 }
 
+export function formatDurationSince(iso: string): string {
+  const totalSeconds = Math.max(0, Math.floor((Date.now() - new Date(iso).getTime()) / 1000));
+  return formatUptime(totalSeconds);
+}
+
 export function formatRelativeTime(iso: string): string {
   const diffMs = Date.now() - new Date(iso).getTime();
   const minutes = Math.floor(diffMs / 60000);

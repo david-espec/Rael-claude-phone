@@ -46,6 +46,9 @@ export interface CloudDevice {
   lastConnectedAt: string;
   uptimeSeconds: number;
   apps: AppShortcut[];
+  autoPlayEnabled: boolean;
+  autoPlayGame: string | null;
+  autoPlaySince: string | null;
 }
 
 export interface InfraStats {
